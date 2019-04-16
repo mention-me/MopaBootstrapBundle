@@ -1,6 +1,8 @@
 <?php
+
 namespace Mopa\Bundle\BootstrapBundle\Form\Extension;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
@@ -35,18 +37,20 @@ class LegendFormTypeExtension extends AbstractTypeExtension
         $view->vars['render_optional_text'] = $options['render_optional_text'];
         $view->vars['errors_on_forms'] = $options['errors_on_forms'];
     }
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'render_fieldset' => $this->render_fieldset,
-            'show_legend' => $this->show_legend,
-            'show_child_legend' => $this->show_child_legend,
-            'label_render' => true,
+        $resolver->setDefaults([
+            'render_fieldset'          => $this->render_fieldset,
+            'show_legend'              => $this->show_legend,
+            'show_child_legend'        => $this->show_child_legend,
+            'label_render'             => true,
             'render_required_asterisk' => $this->render_required_asterisk,
-            'render_optional_text' => $this->render_optional_text,
-            'errors_on_forms' => $this->errors_on_forms,
-        ));
+            'render_optional_text'     => $this->render_optional_text,
+            'errors_on_forms'          => $this->errors_on_forms,
+        ]);
     }
+
     public function getExtendedType()
     {
         return 'form';

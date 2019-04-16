@@ -1,6 +1,8 @@
 <?php
+
 namespace Mopa\Bundle\BootstrapBundle\Form\Extension;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
@@ -18,7 +20,7 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
 
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if (!is_array($options['widget_addon'])) {
+        if ( ! is_array($options['widget_addon'])) {
             throw new CreationException("The 'widget_addon' option must be an array");
         }
         if (in_array('percent', $view->vars['block_prefixes'])) {
@@ -48,39 +50,38 @@ class WidgetFormTypeExtension extends AbstractTypeExtension
         $view->vars['widget_checkbox_label'] = $options['widget_checkbox_label'];
 
     }
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'widget_control_group' => true,
-                'widget_controls' => true,
-                'widget_addon' => array(
+            [
+                'widget_control_group'      => true,
+                'widget_controls'           => true,
+                'widget_addon'              => [
                     'type' => null, //false: dont add anything, null: using presets, anything; prepend; append
                     'icon' => null,
                     'text' => null,
-                ),
-                'widget_prefix' => null,
-                'widget_suffix' => null,
-                'widget_type' => '',
-                'widget_items_attr' => array(),
-                'widget_control_group_attr' => array(),
-                'widget_controls_attr' => array(),
-                'widget_checkbox_label' => $this->options['checkbox_label'],
-            )
+                ],
+                'widget_prefix'             => null,
+                'widget_suffix'             => null,
+                'widget_type'               => '',
+                'widget_items_attr'         => [],
+                'widget_control_group_attr' => [],
+                'widget_controls_attr'      => [],
+                'widget_checkbox_label'     => $this->options['checkbox_label'],
+            ]
         );
-        $resolver->setAllowedValues(array(
-                'widget_type' => array(
-                    'inline',
-                    '',
-                ),
-                'widget_checkbox_label' => array(
-                    'label',
-                    'widget',
-                    'both',
-                )
-            )
-        );
+        $resolver->setAllowedValues('widget_type', [
+            'inline',
+            '',
+        ]);
+        $resolver->setAllowedValues('widget_checkbox_label', [
+            'label',
+            'widget',
+            'both',
+        ]);
     }
+
     public function getExtendedType()
     {
         return 'form';

@@ -1,6 +1,8 @@
 <?php
+
 namespace Mopa\Bundle\BootstrapBundle\Form\Extension;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormInterface;
@@ -30,11 +32,11 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'tabs_class' => $this->options['class'],
-        ));
+        ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -44,33 +46,33 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
 
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        if(!$view->vars['tabbed']) {
+        if ( ! $view->vars['tabbed']) {
             return;
         }
 
         $found_first = false;
-        $tabs = array();
+        $tabs = [];
 
-        foreach($view->children as $child) {
-            if(in_array('tab', $child->vars['block_prefixes'])) {
-                if (!$found_first) {
+        foreach ($view->children as $child) {
+            if (in_array('tab', $child->vars['block_prefixes'])) {
+                if ( ! $found_first) {
                     $child->vars['tab_active'] = $found_first = true;
                 }
 
-                $tabs[] = array(
-                    'id' => $child->vars['id'],
+                $tabs[] = [
+                    'id'    => $child->vars['id'],
                     'label' => $child->vars['label'],
-                    'icon' => $child->vars['icon'],
-                );
+                    'icon'  => $child->vars['icon'],
+                ];
             }
         }
 
-        $tabsForm = $this->formFactory->create(new TabsType(), null, array(
+        $tabsForm = $this->formFactory->create(new TabsType(), null, [
             'tabs' => $tabs,
-            'attr' => array(
+            'attr' => [
                 'class' => $options['tabs_class'],
-            ),
-        ));
+            ],
+        ]);
 
         $view->vars['tabs'] = $tabs;
         $view->vars['tabbed'] = true;

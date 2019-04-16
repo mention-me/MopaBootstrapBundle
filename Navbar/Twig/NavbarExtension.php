@@ -7,6 +7,7 @@ use Mopa\Bundle\BootstrapBundle\Navbar\Renderer\NavbarRenderer;
 class NavbarExtension extends \Twig_Extension
 {
     protected $renderer;
+
     /**
      * @param \Mopa\Bootstrap\Menu\Renderer\NavbarRenderer $renderer
      */
@@ -17,20 +18,24 @@ class NavbarExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            'mopa_bootstrap_navbar' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction('mopa_bootstrap_navbar', [$this, 'render']),
+            [
+                'is_safe' => ['html'],
+            ],
+        ];
     }
 
     /**
      * Renders the whole Navbar with the specified renderer.
      *
-     * @param  \Knp\Menu\ItemInterface|string|array $menu
-     * @param  array                                $options
-     * @param  string                               $renderer
+     * @param \Knp\Menu\ItemInterface|string|array $menu
+     * @param array                                $options
+     * @param string                               $renderer
+     *
      * @return string
      */
-    public function render($name, array $options = array(), $renderer = null)
+    public function render($name, array $options = [], $renderer = null)
     {
         return $this->renderer->renderNavbar($name, $options, $renderer);
     }

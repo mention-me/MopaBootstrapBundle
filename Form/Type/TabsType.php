@@ -16,9 +16,9 @@ class TabsType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'tabs' => array(),
-        ));
+        $resolver->setDefaults([
+            'tabs' => [],
+        ]);
     }
 
     public function getName()
