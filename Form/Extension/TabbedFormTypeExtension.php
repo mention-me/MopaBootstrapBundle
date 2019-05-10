@@ -67,7 +67,7 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
             }
         }
 
-        $tabsForm = $this->formFactory->create(new TabsType(), null, [
+        $tabsForm = $this->formFactory->create(TabsType::class, null, [
             'tabs' => $tabs,
             'attr' => [
                 'class' => $options['tabs_class'],
