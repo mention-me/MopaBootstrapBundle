@@ -10,6 +10,7 @@
 namespace Mopa\Bundle\BootstrapBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\TwigFunction;
 
 /**
  * Add new twig functions related to forms
@@ -48,8 +49,8 @@ class MopaBootstrapTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'form_help' => new \Twig_Function_Node('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
-            'form_tabs' => new \Twig_Function_Node('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
+            'form_help' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
+            'form_tabs' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
         );
     }
 
