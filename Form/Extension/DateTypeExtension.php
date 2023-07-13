@@ -34,8 +34,8 @@ class DateTypeExtension extends AbstractTypeExtension
         ]);
     }
 
-    public function getExtendedType()
+    public static function getExtendedTypes()
     {
-        return DateType::class;
+        return [DateType::class];
     }
 }

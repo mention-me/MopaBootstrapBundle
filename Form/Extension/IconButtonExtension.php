@@ -10,12 +10,9 @@ use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 class IconButtonExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getExtendedType()
+    public static function getExtendedTypes()
     {
-        return ButtonType::class;
+        return [ButtonType::class];
     }
 
     /**
