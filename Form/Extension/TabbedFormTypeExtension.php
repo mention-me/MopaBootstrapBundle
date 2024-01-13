@@ -21,7 +21,7 @@ class TabbedFormTypeExtension extends AbstractTypeExtension
         $this->options = $options;
     }
 
-    public static function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         return [FormType::class];
     }
