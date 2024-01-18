@@ -1,4 +1,4 @@
-{% from 'MopaBootstrapBundle::flash.html.twig' import session_flash %}
+{% from '@MopaBootstrap/flash.html.twig' import session_flash %}
 
 <!DOCTYPE html>
 
@@ -99,7 +99,7 @@
     To speed up page loads save a copy of jQuery in your project and override this block to include the correct path
     Otherwise the regeneration is done on every load in dev more with use_controller: true
      #}
-     
+
     {% javascripts
         'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
         '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tooltip.js'

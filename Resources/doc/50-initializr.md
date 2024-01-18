@@ -5,7 +5,7 @@ HOW TO USE IT?
 --------------
 To make fast start there is only 2 step process to use it.
 
-1. add to config.yml:  
+1. add to config.yml:
 
 ```yaml
 # app/config/config.yml
@@ -13,11 +13,11 @@ mopa_bootstrap
     initializr: ~
 ```
 
-2. extend base_initializr template by your layout template (add this line as first one)  
+2. extend base_initializr template by your layout template (add this line as first one)
 
 ```twig
 {# src/Acme/DemoBundle/Resources/views/layout.html.twig #}
-{% extends 'MopaBootstrapBundle::base_initializr.html.twig' %}
+{% extends '@MopaBootstrap/base_initializr.html.twig' %}
 ```
 
 HOW TO SET IT UP?
