@@ -24,7 +24,7 @@ class TabType extends AbstractType
         $view->parent->vars['tabbed'] = true;
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'tab';
     }

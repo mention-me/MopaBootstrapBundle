@@ -2,9 +2,12 @@
 
 namespace Mopa\Bundle\BootstrapBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
+
 /**
  * Command to check and create bootstrap symlink into MopaBootstrapBundle
  */
+#[AsCommand(name: 'mopa:bootstrap:symlink:sass')]
 class BootstrapSymlinkSassCommand extends BaseBootstrapSymlinkCommand
 {
     public static $twitterBootstrapName = "jlong/sass-twitter-bootstrap";
