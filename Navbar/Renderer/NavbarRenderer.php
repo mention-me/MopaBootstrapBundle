@@ -37,9 +37,9 @@ class NavbarRenderer
         } catch (OptionNotFoundException $e) {
             $template = $options['template'];
         }
-        if (!$template instanceof \Twig_Template) {
+        if (!$template instanceof \Twig\Template && !$template instanceof \Twig\TemplateWrapper) {
             try {
-                $template = $this->container->get('twig')->loadTemplate($template);
+                $template = $this->container->get('twig')->load($template);
             } catch (\ErrorException $e) {
                 throw new \Exception("Could not load template: " . $template, 99, $e);
             }

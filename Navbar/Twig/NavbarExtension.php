@@ -3,8 +3,10 @@
 namespace Mopa\Bundle\BootstrapBundle\Navbar\Twig;
 
 use Mopa\Bundle\BootstrapBundle\Navbar\Renderer\NavbarRenderer;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class NavbarExtension extends \Twig_Extension
+class NavbarExtension extends AbstractExtension
 {
     protected $renderer;
 
@@ -16,11 +18,11 @@ class NavbarExtension extends \Twig_Extension
         $this->renderer = $renderer;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction(
-                'mopa_bootstrap_navbar', 
+            new TwigFunction(
+                'mopa_bootstrap_navbar',
                 [$this, 'render'],
                 [
                     'is_safe' => ['html'],
@@ -41,13 +43,5 @@ class NavbarExtension extends \Twig_Extension
     public function render($name, array $options = [], $renderer = null)
     {
         return $this->renderer->renderNavbar($name, $options, $renderer);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'mopa_bootstrap_navbar';
     }
 }
