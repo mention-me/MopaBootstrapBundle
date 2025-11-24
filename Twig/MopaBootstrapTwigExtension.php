@@ -10,6 +10,8 @@
 namespace Mopa\Bundle\BootstrapBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
@@ -18,7 +20,7 @@ use Twig\TwigFunction;
  * @author Paweł Madej (nysander) <pawel.madej@profarmaceuta.pl>
  * @author Charles Sanquer <charles.sanquer@gmail.com>
  */
-class MopaBootstrapTwigExtension extends \Twig_Extension
+class MopaBootstrapTwigExtension extends AbstractExtension
 {
     protected $container;
 
@@ -35,32 +37,23 @@ class MopaBootstrapTwigExtension extends \Twig_Extension
 
     /**
      *
-     * @param \Twig_Environment $environment
+     * @param Environment $environment
      */
-    public function initRuntime(\Twig_Environment $environment)
+    public function initRuntime(Environment $environment): void
     {
         $this->environment = $environment;
     }
+
     /**
      * Returns a list of functions to add to the existing list.
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
-            'form_help' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
-            'form_tabs' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
-        );
-    }
-
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'bootstrap_form';
+        return [
+            'form_help' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', ['is_safe' => ['html']]),
+            'form_tabs' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', ['is_safe' => ['html']]),
+        ];
     }
 }

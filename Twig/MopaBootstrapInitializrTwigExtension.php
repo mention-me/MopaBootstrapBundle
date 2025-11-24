@@ -10,6 +10,8 @@
 namespace Mopa\Bundle\BootstrapBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
@@ -17,7 +19,7 @@ use Twig\TwigFunction;
  *
  * @author Paweł Madej (nysander) <pawel.madej@profarmaceuta.pl>
  */
-class MopaBootstrapInitializrTwigExtension extends \Twig_Extension
+class MopaBootstrapInitializrTwigExtension extends AbstractExtension
 {
     protected $container;
 
@@ -34,9 +36,9 @@ class MopaBootstrapInitializrTwigExtension extends \Twig_Extension
 
     /**
      *
-     * @param \Twig_Environment $environment
+     * @param Environment $environment
      */
-    public function initRuntime(\Twig_Environment $environment)
+    public function initRuntime(Environment $environment): void
     {
         $this->environment = $environment;
     }
@@ -46,7 +48,7 @@ class MopaBootstrapInitializrTwigExtension extends \Twig_Extension
      *
      * @return array Twig Globals
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         $meta = $this->container->getParameter('mopa_bootstrap.initializr.meta');
         $dns_prefetch = $this->container->getParameter('mopa_bootstrap.initializr.dns_prefetch');
@@ -56,33 +58,23 @@ class MopaBootstrapInitializrTwigExtension extends \Twig_Extension
         // what about PROD env which does not need diagnostic mode and test
         $diagnostic_mode = $this->container->getParameter('mopa_bootstrap.initializr.diagnostic_mode');
 
-        return array(
-            'dns_prefetch'      => $dns_prefetch,
-            'meta'              => $meta,
-            'google'            => $google,
-            'diagnostic_mode'   => $diagnostic_mode
-        );
+        return [
+            'dns_prefetch'    => $dns_prefetch,
+            'meta'            => $meta,
+            'google'          => $google,
+            'diagnostic_mode' => $diagnostic_mode,
+        ];
     }
-    
+
     /**
      * Returns a list of functions to add to the existing list.
      *
      * @return array An array of functions
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
-            'form_help' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', array('is_safe' => array('html'))),
-        );
-    }
-    
-    /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
-     */
-    public function getName()
-    {
-        return 'initializr';
+        return [
+            'form_help' => new TwigFunction('Symfony\Bridge\Twig\Node\SearchAndRenderBlockNode', ['is_safe' => ['html']]),
+        ];
     }
 }
