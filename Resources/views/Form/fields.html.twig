@@ -8,19 +8,19 @@
 {% endblock button_attributes %}
 
 {% block button_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
     {% if icon is not empty %} <i class="icon-{{ icon }}{% if icon_color is not empty %} icon-{{ icon_color }}{% endif %}"></i> {% endif %} {{ label|trans({}, translation_domain) }}</button>
-{% endspaceless %}
+{% endapply %}
 {% endblock button_widget %}
 
 {# Widgets #}
 
 {% block form_widget_simple %}
-{% spaceless %}
+{% apply spaceless %}
     {% set type = type|default('text') %}
     {% if type != 'hidden' and widget_addon.type|default(null) is not null %}
     <div class="input-{{ widget_addon.type }}">
@@ -38,11 +38,11 @@
         {% endif %}
     </div>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_widget_simple %}
 
 {% block form_widget_compound %}
-{% spaceless %}
+{% apply spaceless %}
     {% if form.parent == null %}
         {% if render_fieldset %}<fieldset>{% endif %}
         {% if show_legend %}{{ block('form_legend') }}{% endif %}
@@ -52,17 +52,17 @@
     {% if form.parent == null %}
         {% if render_fieldset %}</fieldset>{% endif %}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_widget_compound %}
 
 {% block collection_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {{ block('form_widget') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock collection_widget %}
 
 {% block choice_widget_expanded %}
-{% spaceless %}
+{% apply spaceless %}
     {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' ' ~ (multiple ? 'checkbox' : 'radio'))}) %}
     {% set label_attr = label_attr|merge({'class': (label_attr.class ~ ' ' ~ (widget_type ? widget_type : ''))}) %}
     {% set label_attr = label_attr|merge({'class': (label_attr.class ~ ' ' ~ (inline is defined and inline ? 'inline' : ''))|trim}) %}
@@ -74,11 +74,11 @@
         </label>
     {% endfor %}
     </div>
-{% endspaceless %}
+{% endapply %}
 {% endblock choice_widget_expanded %}
 
 {% block choice_widget_collapsed %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if widget_addon.type == 'prepend' %}
             {{ block('widget_addon') }}
         {% endif %}
@@ -99,11 +99,11 @@
         {% if widget_addon.type == 'append' %}
             {{ block('widget_addon') }}
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock choice_widget_collapsed %}
 
 {% block checkbox_widget %}
-{% spaceless %}
+{% apply spaceless %}
 {% if label is not same as(false) and label is empty %}
     {% set label = name|humanize %}
 {% endif %}
@@ -123,11 +123,11 @@
     </label>
     {% endif %}
 {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock checkbox_widget %}
 
 {% block date_widget %}
-{% spaceless %}
+{% apply spaceless %}
 {% if widget == 'single_text' %}
     {% if datepicker is defined %}
         <div class="input-{{ widget_addon.type }} date" {{ block('widget_container_attributes') }} data-date="{{ value }}" data-date-format="{{ format|lower }}" data-form="datepicker">
@@ -166,11 +166,11 @@
             })|raw }}
         {{ block('help') }}
 {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock date_widget %}
 
 {% block time_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% if widget == 'single_text' %}
         {{ block('form_widget_simple') }}
     {% else %}
@@ -180,11 +180,11 @@
         </div>
         {{ block('help') }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock time_widget %}
 
 {% block datetime_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% if widget == 'single_text' %}
         {{ block('form_widget_simple') }}
     {% else %}
@@ -196,27 +196,27 @@
                 {{ form_widget(form.time, {'attr': {'class': attr.widget_class|default('')}}) }}
             </div>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock datetime_widget %}
 
 {% block percent_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% set widget_addon = widget_addon|merge({'text': widget_addon.text|default('%')}) %}
     {{ block('form_widget_simple') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock percent_widget %}
 
 {% block money_widget %}
-{% spaceless %}
+{% apply spaceless %}
     {% set widget_addon = widget_addon|merge({'text': money_pattern|replace({ '{{ widget }}': ''})}) %}
     {{ block('form_widget_simple') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock money_widget %}
 
 {# Labels #}
 
 {% block form_legend %}
-{% spaceless %}
+{% apply spaceless %}
     {% if label is empty %}
         {% set label = name|humanize %}
     {% endif %}
@@ -224,12 +224,12 @@
     {% if widget_add_btn %}
         {{ block('form_widget_add_btn') }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_legend %}
 
 {% block form_label %}
 {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
-{% spaceless %}
+{% apply spaceless %}
     {% if label is not same as(false) %}
         {% if label is empty %}
             {% set label = name|humanize %}
@@ -255,7 +255,7 @@
         {% endif %}
         </label>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endif %}
 {% endblock form_label %}
 
@@ -279,7 +279,7 @@
 {# Rows #}
 
 {% block form_rows_visible %}
-{% spaceless %}
+{% apply spaceless %}
     {% for child in form %}
         {% if 'hidden' not in child.vars.block_prefixes %}
             {% if 'collection' in form.vars.block_prefixes and not omit_collection_item %}
@@ -291,11 +291,11 @@
             {% endif %}
         {% endif %}
     {% endfor %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_rows_visible %}
 
 {% block form_row %}
-{% spaceless %}
+{% apply spaceless %}
     {% set attr = attr|merge({'class': attr.class|default('') ~ (errors|length > 0 ? ' error' : '') }) %}
     {{ block('widget_control_group_start') }}
     {{ widget_prefix|trans({}, translation_domain)|raw }} {{ form_widget(form, _context) }} {{ widget_suffix|trans({}, translation_domain)|raw }}
@@ -304,47 +304,47 @@
     {% endif -%}
     {{ block('form_message') }}
     {{ block('widget_control_group_end') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_row %}
 
 {# Support #}
 
 {% block form_message %}
-{% spaceless %}
+{% apply spaceless %}
     {{ form_errors(form) }}
     {{ block('form_help') }}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_message %}
 
 {# Help #}
 
 {% block form_help %}
-{% spaceless %}
+{% apply spaceless %}
 {% if 'checkbox' not in form.vars.block_prefixes %}{# checkbox widget/choice widget problem see https://github.com/phiamo/MopaBootstrapBundle/commit/67406a16b38e5b622fffdd5b9c8a8707ca73f493#commitcomment-1295951 # #}
     {% if help_inline %}<p class="help-inline">{{ help_inline|trans({}, translation_domain)|raw }}</p>{%endif %}
 {% endif %}
 {% if help_block %}<p class="help-block">{{ help_block|trans({}, translation_domain)|raw }}</p>{%endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_help %}
 
 {% block form_widget_add_btn %}
-{% spaceless %}
+{% apply spaceless %}
     {% if widget_add_btn %}
     {% set button_type = 'add' %}
     {% set button_values = widget_add_btn %}
     {{ block('collection_button') }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_widget_add_btn %}
 
 {% block form_widget_remove_btn %}
-{% spaceless %}
+{% apply spaceless %}
     {% if widget_remove_btn %}
     {% set button_type = 'remove' %}
     {% set button_values = widget_remove_btn %}
     {{ block('collection_button') }}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_widget_remove_btn %}
 
 {% block collection_button %}
@@ -366,17 +366,17 @@
 {% endblock label_asterisk %}
 
 {% block widget_addon %}
-{% spaceless %}
+{% apply spaceless %}
 {# prevent deep nesting wrong context copy error #}
 {% from '@MopaBootstrap/icons.html.twig' import icon %}
 <span class="add-on">{{ (widget_addon.text|default(false) ? widget_addon.text|trans({}, translation_domain) : icon(widget_addon.icon))|raw('html')  }} {{ (widget_addon.html|default(false) ? widget_addon.html|raw('html') : '')  }}</span>
-{% endspaceless %}
+{% endapply %}
 {% endblock widget_addon %}
 
 {# Errors #}
 
 {% block _form_errors %}
-{% spaceless %}
+{% apply spaceless %}
     {% if errors|length > 0 %}
     <ul>
         {% for error in errors %}
@@ -384,11 +384,11 @@
         {% endfor %}
     </ul>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock _form_errors %}
 
 {% block form_errors %}
-{% spaceless %}
+{% apply spaceless %}
 {% if errors_on_forms and form.parent == null %}
     {# prevent deep nesting wrong context copy error #}
     {% from '@MopaBootstrap/flash.html.twig' import flash %}
@@ -423,14 +423,14 @@
     </span>
     {% endif %}
 {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_errors %}
 
 
 {# used to determine which type of error #}
 
 {% block error_type %}
-{% spaceless %}
+{% apply spaceless %}
 {% if error_type %}
     {{ error_type }}
 {% elseif form.parent == null %}
@@ -438,13 +438,13 @@
 {% else %}
 inline
 {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock error_type %}
 
 {# widget helper blocks #}
 
 {% block widget_control_group_start %}
-{% spaceless %}
+{% apply spaceless %}
 {% if widget_control_group|default(false) or form.parent == null %}
     {% if prototype is defined %}
         {% set data_prototype = 'collection' in form.vars.block_prefixes and not omit_collection_item ? '<div class="collection-item ' ~ widget_items_attr.class|default()|join(' ') ~ '" id="' ~ prototype.vars.id ~ '_control_group">' ~ form_row(prototype) ~ '</div>' : form_row(prototype) %}
@@ -481,16 +481,16 @@ inline
         {{ form_label(form, label|default(null)) }}
     {% endif %}
 {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock widget_control_group_start %}
 
 {% block widget_control_group_end %}
-{% spaceless %}
+{% apply spaceless %}
 {% if widget_control_group|default(false) or form.parent == null %}
     {% if widget_controls|default(false) or form.parent == null %}
         </div>
     {% endif %}
     </div>
 {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock widget_control_group_end %}
