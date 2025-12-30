@@ -110,7 +110,7 @@
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes and label_render %}
     <label class="checkbox{% if inline is defined and inline %} inline{% endif %}">
 {% endif %}
-        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/> {{ help_inline|trans({}, translation_domain)|raw }}
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}/> {{ (help_inline|default(help))|trans({}, translation_domain)|raw }}
 {% if form.parent != null and 'choice' not in form.parent.vars.block_prefixes %}
     {% if label_render and widget_checkbox_label in ['both', 'widget'] %}
         {{ label|trans({}, translation_domain) }}
@@ -322,6 +322,7 @@
 {% apply spaceless %}
 {% if 'checkbox' not in form.vars.block_prefixes %}{# checkbox widget/choice widget problem see https://github.com/phiamo/MopaBootstrapBundle/commit/67406a16b38e5b622fffdd5b9c8a8707ca73f493#commitcomment-1295951 # #}
     {% if help_inline %}<p class="help-inline">{{ help_inline|trans({}, translation_domain)|raw }}</p>{%endif %}
+    {% if help %}<p class="help-block">{{ help|trans({}, translation_domain)|raw }}</p>{%endif %}
 {% endif %}
 {% if help_block %}<p class="help-block">{{ help_block|trans({}, translation_domain)|raw }}</p>{%endif %}
 {% endapply %}
